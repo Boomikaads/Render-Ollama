@@ -1,11 +1,14 @@
 #!/bin/bash
 set -e
 
-# Pull the model before starting the server
-ollama pull llama3:8b
+# Pre-pull model if not already present
+if ! ollama list | grep -q "llama3:8b"; then
+  echo "Pulling llama3:8b..."
+  ollama pull llama3:8b
+fi
 
-# Start Ollama server on Render's assigned port
-OLLAMA_HOST=0.0.0.0:$PORT ollama serve
+# Start Ollama server
+exec ollama serve
 
 
 
