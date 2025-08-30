@@ -2,19 +2,15 @@ services:
   - type: web
     name: ollama-llama3
     env: docker
-    repo: https://github.com/Boomikaads/Render-Ollama.git  # replace with your repo
+    repo: https://github.com/Boomikaads/Render-Ollama.git
     branch: main
-    plan: starter               # Starter or higher required for persistent disk
+    plan: starter
     dockerfilePath: ./Dockerfile
     disk:
       name: ollama-data
       mountPath: /root/.ollama
       sizeGB: 50
     envVars:
-      - key: OLLAMA_MODEL
-        value: llama3:8b
-      - key: OLLAMA_MOUNT_PATH
-        value: /root/.ollama
       - key: PORT
         value: "11434"
     healthCheckPath: /
