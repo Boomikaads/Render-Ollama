@@ -1,19 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
-MODEL="${OLLAMA_MODEL:-llama3}"
-MOUNT_PATH="${OLLAMA_MOUNT_PATH:-/root/.ollama}"
+# Pull the model before starting the server
+ollama pull llama3:8b
 
-# ensure mount path exists
-mkdir -p "${MOUNT_PATH}"
-export OLLAMA_HOME="${MOUNT_PATH}"
+# Start Ollama server on Render's assigned port
+OLLAMA_HOST=0.0.0.0:$PORT ollama serve
 
-echo "Pulling model: $MODEL"
-ollama pull "$MODEL"
-
-echo "Starting Ollama server..."
-# run full API server, bound to 0.0.0.0 so Render can access it
-OLLAMA_HOST=0.0.0.0 ollama serve
 
 
 
