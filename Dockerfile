@@ -1,15 +1,17 @@
-# Use the official Ollama image (keeps runtime up to date)
+# Base Ollama image (already has the server installed)
 FROM ollama/ollama:latest
 
-# Optional: set a default model name (can be overridden in Render env)
-ENV OLLAMA_MODEL=llama3
+# Set environment variables
+ENV OLLAMA_HOST=0.0.0.0:11434
+ENV OLLAMA_MODELS=/root/.ollama/models
 
-# Copy startup script
+# Copy entrypoint script
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
-# Expose the default Ollama port
+# Preload llama3:8b at build time
+RUN ollama pull llama3:8b
+
 EXPOSE 11434
 
-# Start the entrypoint (pull model if missing, then serve)
 ENTRYPOINT ["/entrypoint.sh"]
