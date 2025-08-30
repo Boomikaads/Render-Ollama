@@ -12,7 +12,9 @@ echo "Pulling model: $MODEL"
 ollama pull "$MODEL"
 
 echo "Starting Ollama server..."
-ollama serve --host 0.0.0.0 --port 11434
+# run full API server, bound to 0.0.0.0 so Render can access it
+OLLAMA_HOST=0.0.0.0 ollama serve
+
 
 
 
