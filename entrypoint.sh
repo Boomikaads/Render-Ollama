@@ -1,10 +1,14 @@
 #!/bin/bash
 set -e
 
-# Pre-pull model if not already present
+echo "Starting Ollama on Render..."
+
+# Ensure model is available (double-check at runtime)
 if ! ollama list | grep -q "llama3:8b"; then
-  echo "Pulling llama3:8b..."
+  echo "Model not found, pulling llama3:8b..."
   ollama pull llama3:8b
+else
+  echo "Model llama3:8b already present."
 fi
 
 # Start Ollama server
